@@ -8,6 +8,7 @@
 |Provide access to guidance, configuration and troubleshooting of AWS with interoperability  many common operating systems, platforms, and application stack components|||YES|YES|
 |Access to Infrastructure Event Management for an additional fee||||YES|
 |Provides access to 7 core checks from the AWS Trusted Advisor Best Practice Checks|YES|YES|||
+|Provides architectural guidance contextual to your specific use-cases||||YES|
 
 - Enterprise - AWS Enterprise Support provides customers with concierge-like service where the main focus is helping the customer achieve their outcomes and find success in the cloud. With Enterprise Support, you get 24x7 technical support from high-quality engineers, tools and technology to automatically manage the health of your environment, consultative architectural guidance delivered in the context of your applications and use-cases, and a designated Technical Account Manager (TAM) to coordinate access to proactive/preventative programs and AWS subject matter experts. You get access to guidance, configuration, and troubleshooting of AWS interoperability with many common operating systems, platforms, and application stack components.
 
@@ -20,8 +21,8 @@
 
 - Developer - AWS recommends Developer Support plan if you are testing or doing early development on AWS and want the ability to get email-based technical support during business hours as well as general architectural guidance as you build and test. This plan also supports general guidance on how services can be used for various use cases, workloads, or applications. You do not get access to Infrastructure Event Management with this plan. This plan provides access to just the 7 core Trusted Advisor checks.
 
-### References:
-### https://aws.amazon.com/premiumsupport/plans/
+#### References:
+#### https://aws.amazon.com/premiumsupport/plans/
 
 --
 
@@ -36,8 +37,8 @@ Details of the various scenarios that the AWS Abuse team can address:
 - Hosting objectionable or copyrighted content: You have evidence that AWS resources are used to host or distribute illegal content or distribute copyrighted content without the consent of the copyright holder.
 - Distributing malware: You have evidence that AWS resources are used to distribute software that was knowingly created to compromise or cause harm to computers or machines on which it is installed.
 
-### References:
-### https://aws.amazon.com/premiumsupport/knowledge-center/report-aws-abuse/
+#### References:
+#### https://aws.amazon.com/premiumsupport/knowledge-center/report-aws-abuse/
 
 ---
 ## Network
@@ -52,35 +53,75 @@ A gateway endpoint is a gateway that you specify as a target for a route in your
 - Amazon S3
 - DynamoDB
 
-### References:
-### https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html
+#### References:
+#### https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html
 
 ---
 ## Storage
 
-- EFS - Amazon EFS is a file storage service for use with Amazon EC2. Amazon EFS provides a file system interface, file system access semantics, and concurrently-accessible storage for up to thousands of Amazon EC2 instances. Amazon EFS uses the Network File System protocol.
+- EFS - Amazon EFS is a file storage service for use with Amazon EC2. Amazon EFS provides a file system interface, file system access semantics, and concurrently-accessible storage for up to thousands of Amazon EC2 instances. Amazon EFS uses the Network File System protocol. Amazon EFS provides a simple, scalable, fully managed elastic NFS file system for use with AWS Cloud services and on-premises resources. It is built to scale on-demand to petabytes without disrupting applications, growing and shrinking automatically as you add and remove files, eliminating the need to provision and manage capacity to accommodate growth. The service is designed to be highly scalable, highly available, and highly durable. Amazon EFS file systems store data and metadata across multiple Availability Zones in an AWS Region. EFS file system can be mounted on instances across multiple Availability Zones.
 
-- EBS - Amazon Elastic Block Store (EBS) is an easy to use, high-performance block storage service designed for use with Amazon Elastic Compute Cloud (EC2) for both throughput and transaction-intensive workloads at any scale. EBS volumes cannot be accessed simultaneously by multiple EC2 instances.
+- EBS - Amazon Elastic Block Store (EBS) is an easy to use, high-performance block storage service designed for use with Amazon Elastic Compute Cloud (EC2) for both throughput and transaction-intensive workloads at any scale. EBS volumes cannot be accessed simultaneously by multiple EC2 instances. Designed for mission-critical systems, EBS volumes are replicated within an Availability Zone (AZ) and can easily scale to petabytes of data. EBS volume can be attached to a single instance in the same Availability Zone.
 
 - Instance Store - An instance store provides temporary block-level storage for your instance. This storage is located on disks that are physically attached to the host computer. Instance Store volumes cannot be accessed simultaneously by multiple EC2 instances. This is a good option when you need storage with very low latency, but you don't need the data to persist when the instance terminates or you can take advantage of fault-tolerant architectures. Instances store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content, or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers.
 
 - S3 - Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance. S3 is object storage and it does not support file append operations.
 
-### References:
-### https://aws.amazon.com/efs/
+#### References:
+#### https://aws.amazon.com/efs/
+
+---
+## AWS EC2
+
+- Use Mode
+
+||Dedicated Host|Dedicated Instance|
+|-----------|-----------|-----------|
+|Billing|Per-host billing|Per-instance billing|
+|Visibility of sockets, cores, and host ID|Provides visibility of the number of sockets and physical cores|No visibility|
+|Host and instance affinity|Allows you to consistently deploy your instances to the same physical server over time|Not supported|
+|Targeted instance placement|Provides additional visibility and control over how instances are placed on a physical server|Not supported|
+|Automatic instance recovery|Supported|Supported|
+|Bring Your Own License (BYOL)|Supported|Not Supported|
+
+  - Amazon EC2 Dedicated Hosts
+    - Amazon EC2 Dedicated Hosts allow you to use your eligible software licenses from vendors such as Microsoft and Oracle on Amazon EC2. An Amazon EC2 Dedicated Host is a physical server fully dedicated for your use, so you can help address corporate compliance requirements.
+  - Dedicated instance
+    - Dedicated Instances are Amazon EC2 instances that run in a virtual private cloud (VPC) on hardware that's dedicated to a single customer. Dedicated Instances that belong to different AWS accounts are physically isolated at the hardware level. However, Dedicated Instances may share hardware with other instances from the same AWS account that are not Dedicated Instances. You cannot use Dedicated Instances for using server-bound software licenses.
+  - Reserved Instance
+    - Reserved Instances provide you with significant savings (up to 75%) on your Amazon EC2 costs compared to On-Demand Instance pricing. Reserved Instances are not physical instances, but rather a billing discount applied to the use of On-Demand Instances in your account. You can purchase a Reserved Instance for a one-year or three-year commitment, with the three-year commitment offering a bigger discount. You cannot use Reserved Instances for using server-bound software licenses.
+  - On-Demand Instance
+    - An On-Demand Instance is an instance that you use on-demand. You have full control over its lifecycle — you decide when to launch, stop, hibernate, start, reboot, or terminate it. There is no long-term commitment required when you purchase On-Demand Instances. There is no upfront payment and you pay only for the seconds that your On-Demand Instances are running. The price per second for running an On-Demand Instance is fixed. On-demand instances cannot be interrupted. You cannot use On-demand Instances for using server-bound software licenses.
+
+#### References:
+#### https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html
 
 ---
 ## Security
 
-- AWS WAF is a web application firewall that lets you monitor the HTTP and HTTPS requests that are forwarded to an Amazon API Gateway API, Amazon CloudFront or an Application Load Balancer. HTTP and HTTPS requests are part of the Application layer, which is layer 7.
+- AWS WAF is a web application firewall that lets you monitor the HTTP and HTTPS requests that are forwarded to an Amazon API Gateway API, Amazon CloudFront or an Application Load Balancer. HTTP and HTTPS requests are part of the Application layer, which is layer 7. AWS WAF charges based on the number of web access control lists (web ACLs) that you create, the number of rules that you add per web ACL, and the number of web requests that you receive (it is not a free service).
 
 - AWS Shield offers protection to the layer 3 and 4. layer 3 is the Network layer and this layer decides which physical path data will take when it moves on the network. Layer 4 is the Transport layer and this layer data transmission occurs using TCP or UDP protocols
 
-### References:
-### https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html
+- AWS Shield Standard is activated for all AWS customers, by default. For higher levels of protection against attacks, you can subscribe to AWS Shield Advanced. While AWS Shield Standard helps protect all AWS customers, you get better protection if you are using Amazon CloudFront and Amazon Route 53. All AWS customers benefit from the automatic protections of AWS Shield Standard, at no additional charge.
 
+- AWS Shield Advanced provides expanded DDoS attack protection for web applications running on the following resources: Amazon Elastic Compute Cloud, Elastic Load Balancing (ELB), Amazon CloudFront, Amazon Route 53, AWS Global Accelerator. With Shield Advanced, you also have exclusive access to advanced, real-time metrics and reports for extensive visibility into attacks on your AWS resources. With the assistance of the DRT (DDoS response team), AWS Shield Advanced includes intelligent DDoS attack detection and mitigation for not only for network layer (layer 3) and transport layer (layer 4) attacks but also for application layer (layer 7) attacks. AWS Shield Advanced is a paid service that provides additional protections for internet-facing applications.
+
+#### References:
+#### https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html
+#### https://docs.aws.amazon.com/waf/latest/developerguide/ddos-overview.html
+#### https://docs.aws.amazon.com/waf/latest/developerguide/shield-chapter.html
+
+--
 ### AWS Secrets Manager
-  - AWS Secrets Manager helps you protect secrets needed to access your applications, services, and IT resources. The service enables you to easily rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their lifecycle. Users and applications retrieve secrets with a call to Secrets Manager APIs, eliminating the need to hardcode sensitive information in plain text. It cannot be used to discover and protect your sensitive data in AWS.
+- AWS Secrets Manager helps you protect secrets needed to access your applications, services, and IT resources. The service enables you to easily rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their lifecycle. Users and applications retrieve secrets with a call to Secrets Manager APIs, eliminating the need to hardcode sensitive information in plain text. It cannot be used to discover and protect your sensitive data in AWS. With Secrets Manager, you pay based on the number of secrets stored and API calls made.
+
+---
+## AWS Artifact
+- AWS Artifact is your go-to, central resource for compliance-related information that matters to your organization. It provides on-demand access to AWS’ security and compliance reports and select online agreements. Reports available in AWS Artifact include our Service Organization Control (SOC) reports, Payment Card Industry (PCI) reports, and certifications from accreditation bodies across geographies and compliance verticals that validate the implementation and operating effectiveness of AWS security controls. Different types of agreements are available in AWS Artifact Agreements to address the needs of customers subject to specific regulations. For example, the Business Associate Addendum (BAA) is available for customers that need to comply with the Health Insurance Portability and Accountability Act (HIPAA). It is not a service, it's a no-cost, self-service portal for on-demand access to AWS’ compliance reports.
+
+#### References:
+#### https://aws.amazon.com/artifact/
 
 ---
 ## Cloud Computing
@@ -107,10 +148,10 @@ A gateway endpoint is a gateway that you specify as a target for a route in your
 - Go global in minutes
   - Easily deploy your application in multiple regions around the world with just a few clicks.This means you can provide lower latency and a better experience for your customers at minimal cost.
 
-### References:
-### https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html
-### https://wa.aws.amazon.com/wat.concepts.wa-concepts.en.html
-### https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html
+#### References:
+#### https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html
+#### https://wa.aws.amazon.com/wat.concepts.wa-concepts.en.html
+#### https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html
 ---
 ## AWS Well-Architected Framework
 
@@ -128,10 +169,18 @@ There are three best practice areas for Reliability in the cloud - Foundations, 
 
 - Amazon GuardDuty - Amazon GuardDuty is a threat detection service that monitors malicious activity and unauthorized behavior to protect your AWS account. GuardDuty analyzes billions of events across your AWS accounts from AWS CloudTrail (AWS user and API activity in your accounts), Amazon VPC Flow Logs (network traffic data), and DNS Logs (name query patterns). This service is for AWS account level access, not for instance-level management like an EC2. GuardDuty cannot be used to check OS vulnerabilities.
 
-### References:
-### https://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf
-### https://aws.amazon.com/config/
-### https://aws.amazon.com/cloudtrail/
+#### References:
+#### https://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf
+#### https://aws.amazon.com/config/
+#### https://aws.amazon.com/cloudtrail/
+--
+### Pillars Mandated in AWS Well-Architect Framework
+
+The AWS Well-Architected Framework helps you understand the pros and cons of decisions you make while building systems on AWS. By using the Framework you will learn architectural best practices for designing and operating reliable, secure, efficient, and cost-effective systems in the cloud. It provides a way for you to consistently measure your architectures against best practices and identify areas for improvement.
+
+- The AWS Well-Architected Framework is based on five pillars — Operational Excellence, Security, Reliability, Performance Efficiency, and Cost Optimization.
+  - "Security" - The ability to protect information, systems, and assets while delivering business value through risk assessments and mitigation strategies.
+  - "Performance Efficiency" - The ability to use computing resources efficiently to meet system requirements, and to maintain that efficiency as demand changes and technologies evolve.
 
 ---
 ## Migration from on-premises to AWS Cloud
@@ -150,10 +199,10 @@ There are three best practice areas for Reliability in the cloud - Foundations, 
 - Use AWS Trusted Advisor to automate the infrastructure migration
   - Trusted Advisor cannot automate the infrastructure migration.
 
-### References:
-### https://aws.amazon.com/partners/
-### https://aws.amazon.com/professional-services/
-### https://aws.amazon.com/solutions/implementations/aws-landing-zone/
+#### References:
+#### https://aws.amazon.com/partners/
+#### https://aws.amazon.com/professional-services/
+#### https://aws.amazon.com/solutions/implementations/aws-landing-zone/
 
 ---
 ## Serverless stack on AWS Cloud
@@ -188,7 +237,7 @@ AWS provides a set of fully managed services that you can use to build and run s
   - AWS provides tools and services that aid developers in the serverless application development process. AWS and its partner ecosystem offer tools for continuous integration and delivery, testing, deployments, monitoring and diagnostics, SDKs, frameworks, and integrated development environment (IDE) plugins.
 
 ### References
-### https://aws.amazon.com/serverless/
+#### https://aws.amazon.com/serverless/
 
 ---
 ## Data Analitycs
@@ -199,9 +248,15 @@ AWS provides a set of fully managed services that you can use to build and run s
   - AWS Glue is a fully managed extract, transform, and load (ETL) service that makes it easy for customers to prepare and load their data for analytics. AWS Glue job is meant to be used for batch ETL data processing. It cannot be used to discover and protect your sensitive data in AWS.
 - Amazon Polly
   - Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk, and build entirely new categories of speech-enabled products. Polly's Text-to-Speech (TTS) service uses advanced deep learning technologies to synthesize natural sounding human speech. It cannot be used to discover and protect your sensitive data in AWS.
+- Amazon Transcribe
+  - You can use Amazon Transcribe to add speech-to-text capability to your applications. Amazon Transcribe uses a deep learning process called automatic speech recognition (ASR) to convert speech to text quickly and accurately. Amazon Transcribe can be used to transcribe customer service calls, to automate closed captioning and subtitling, and to generate metadata for media assets.
+- Amazon Translate
+  - Amazon Translate is used for language translation. Amazon Translate uses neural machine translation via deep learning models to deliver more accurate and more natural-sounding translation than traditional statistical and rule-based translation algorithms.
 
-### References:
-### https://aws.amazon.com/macie/
+#### References:
+#### https://aws.amazon.com/macie/
+#### https://aws.amazon.com/polly/
+#### https://aws.amazon.com/transcribe/
 
 ---
 ## AWS Monitoring
@@ -214,16 +269,82 @@ AWS provides a set of fully managed services that you can use to build and run s
 - AWS Simple Monthly Calculator
   - The Simple Monthly Calculator provides an estimate of usage charges for AWS services based on certain information you provide. It helps customers and prospects estimate their monthly AWS bill more efficiently. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold.
 
+--
+### Cost-Effective
+
+- Amazon EC2 Reserved Instances
+  - You can use Amazon EC2 Reserved Instances to reserve capacity and receive a discount on your instance usage compared to running On-Demand instances. The discounted usage price is reserved for the duration of your contract, allowing you to predict compute costs over the term of the Reserved Instance.
+
+- So the percentage savings for each option is as follows:
+  - "No upfront payment option with the standard 1-year term" - 36%
+  - "All upfront payment option with the standard 1-year term" - 40%
+  - "No upfront payment option with the standard 3-years term" - 56%
+  - "Patial upfront payment option with the standard 3-years term" - 59%
+
+***Exam Alert:*
+For the exam, there is no need to memorize these savings numbers. All you need to remember is that a 3 years term would always be more cost-effective than a 1-year term. Then within a term, "all upfront" is better than "partial upfront" which in turn is better than "no upfront" from a cost savings perspective.**
+
+#### References:
+#### https://d0.awsstatic.com/whitepapers/aws_pricing_overview.pdf
+
+--
+### Data Transfer
+
+- There are three fundamental drivers of cost with AWS: compute, storage, and outbound data transfer. In most cases, there is no charge for inbound data transfer or data transfer between other AWS services within the same region. Outbound data transfer is aggregated across services and then charged at the outbound data transfer rate.
+- Per AWS pricing, data transfer between AWS services within the same region is not charged, so there would be no data transfer charge for moving 500 GB of data from an EC2 instance to an S3 bucket in the same region.
+
+--
 ### Logging
 
 - AWS CloudTrail
   - AWS CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account. With CloudTrail, you can log, continuously monitor, and retain account activity related to actions across your AWS infrastructure. CloudTrail provides event history of your AWS account activity, including actions taken through the AWS Management Console, AWS SDKs, command-line tools, and other AWS services. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold.
 
+--
 ### Compliance
 
 - AWS Trusted Advisor
   - AWS Trusted Advisor is an online tool that provides real-time guidance to help provision your resources following AWS best practices. Whether establishing new workflows, developing applications, or as part of ongoing improvement, recommendations provided by Trusted Advisor regularly help keep your solutions provisioned optimally. AWS Trusted Advisor analyzes your AWS environment and provides best practice recommendations in five categories: Cost Optimization, Performance, Security, Fault Tolerance, Service Limits. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold.
 
-### References:
-### https://aws.amazon.com/aws-cost-management/aws-budgets/
-### https://aws.amazon.com/premiumsupport/technology/trusted-advisor/best-practice-checklist/
+#### References:
+#### https://aws.amazon.com/aws-cost-management/aws-budgets/
+#### https://aws.amazon.com/premiumsupport/technology/trusted-advisor/best-practice-checklist/
+
+---
+## AWS Global Infrastructure
+
+AWS has the concept of a Region, which is a physical location around the world where AWS clusters data centers. Each AWS Region consists of multiple (two or more), isolated, and physically separate AZ's within a geographic area. Each AZ has independent power, cooling, and physical security and is connected via redundant, ultra-low-latency networks.
+
+An Availability Zone (AZ) is one or more discrete data centers with redundant power, networking, and connectivity in an AWS Region. All AZ’s in an AWS Region are interconnected with high-bandwidth, low-latency networking, over fully redundant, dedicated metro fiber providing high-throughput, low-latency networking between AZ’s.
+
+#### References:
+#### https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
+
+---
+## AWS Shared Responsibility Model
+
+Security and Compliance is a shared responsibility between AWS and the customer. This shared model can help relieve the customer’s operational burden as AWS operates, manages and controls the components from the host operating system and virtualization layer down to the physical security of the facilities in which the service operates.
+
+Controls that apply to both the infrastructure layer and customer layers, but in completely separate contexts or perspectives are called shared controls. In a shared control, AWS provides the requirements for the infrastructure and the customer must provide their own control implementation within their use of AWS services. Configuration Management forms a part of shared controls - AWS maintains the configuration of its infrastructure devices, but a customer is responsible for configuring their own guest operating systems, databases, and applications.
+
+- Customer
+  - Responsability for security IN the Cloud.
+    - Customer Data
+    - Platform, Applications, Identify & Access Management
+    - Operating System, Networking & Firewall Configuration
+    - Client-side data encryption & data integrity authentication
+    - Server-side encryption (Filesystem and/or data)
+    - Network traffic protection (Encryption, Integrity, Identity)
+- AWS
+  - Responsability for security OF the Cloud.
+    - Software
+      - Compute
+      - Storage
+      - Database
+      - Networking
+    - Hardware/AWS Global Infrastructure
+      - Regions
+      - Avaiability Zones
+      - Edge Location
+
+#### References:
+#### https://aws.amazon.com/compliance/shared-responsibility-model/

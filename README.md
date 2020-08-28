@@ -9,8 +9,12 @@
 |Access to Infrastructure Event Management for an additional fee||||YES|
 |Provides access to 7 core checks from the AWS Trusted Advisor Best Practice Checks|YES|YES|||
 |Provides architectural guidance contextual to your specific use-cases||||YES|
+|Allows one contact to open unlimited cases||YES|||
+|Allows unlimited contacts to open unlimited cases|||YES|YES|
+|Concierge support team as well as a response time of around an hour in case the systems go down|||YES||
+|AWS support plan provides access to a Technical Account Manager (TAM)|||YES||
 
-- Enterprise - AWS Enterprise Support provides customers with concierge-like service where the main focus is helping the customer achieve their outcomes and find success in the cloud. With Enterprise Support, you get 24x7 technical support from high-quality engineers, tools and technology to automatically manage the health of your environment, consultative architectural guidance delivered in the context of your applications and use-cases, and a designated Technical Account Manager (TAM) to coordinate access to proactive/preventative programs and AWS subject matter experts. You get access to guidance, configuration, and troubleshooting of AWS interoperability with many common operating systems, platforms, and application stack components.
+- Enterprise - AWS Enterprise Support provides customers with concierge-like service where the main focus is helping the customer achieve their outcomes and find success in the cloud. With Enterprise Support, you get 24x7 technical support from high-quality engineers, tools and technology to automatically manage the health of your environment, consultative architectural guidance delivered in the context of your applications and use-cases, and a designated Technical Account Manager (TAM) to coordinate access to proactive/preventative programs and AWS subject matter experts. You get access to guidance, configuration, and troubleshooting of AWS interoperability with many common operating systems, platforms, and application stack components. Enterprise Support plan provides a response time of fewer than 15 minutes for business-critical systems and provides a response time of less than an hour for production systems related outage.
 
 - Business - AWS recommends Business Support if you have production workloads on AWS and want 24x7 phone, email and chat access to technical support and architectural guidance in the context of your specific use-cases. You get full access to AWS Trusted Advisor Best Practice Checks. You get access to guidance, configuration, and troubleshooting of AWS interoperability with many common operating systems, platforms, and application stack components. Also, you get access to Infrastructure Event Management for an additional fee.
 
@@ -19,7 +23,7 @@
   - AWS Trusted Advisor - Access to the 7 core Trusted Advisor checks and guidance to provision your resources following best practices to increase performance and improve security.
   - AWS Personal Health Dashboard - A personalized view of the health of AWS services, and alerts when your resources are impacted.
 
-- Developer - AWS recommends Developer Support plan if you are testing or doing early development on AWS and want the ability to get email-based technical support during business hours as well as general architectural guidance as you build and test. This plan also supports general guidance on how services can be used for various use cases, workloads, or applications. You do not get access to Infrastructure Event Management with this plan. This plan provides access to just the 7 core Trusted Advisor checks.
+- Developer - AWS recommends Developer Support plan if you are testing or doing early development on AWS and want the ability to get email-based technical support during business hours as well as general architectural guidance as you build and test. This plan also supports general guidance on how services can be used for various use cases, workloads, or applications. You do not get access to Infrastructure Event Management with this plan. This plan provides access to just the 7 core Trusted Advisor checks. AWS Developer Support plan allows one primary contact to open unlimited cases.
 
 #### References:
 #### https://aws.amazon.com/premiumsupport/plans/
@@ -97,6 +101,18 @@ A gateway endpoint is a gateway that you specify as a target for a route in your
 #### https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html
 
 ---
+## Containerization
+
+- Amazon Elastic Container Registry (ECR)
+  - Amazon Elastic Container Registry (ECR) can be used to store, manage, and deploy Docker container images. Amazon ECR eliminates the need to operate your container repositories. You can then pull your docker images from ECR and run those on Amazon Elastic Container Service (ECS).
+- Amazon Elastic Container Service (ECS)
+  - Amazon Elastic Container Service (Amazon ECS) is a highly scalable, fast, container management service that makes it easy to run, stop, and manage Docker containers on a cluster. You cannot use ECS to store and deploy docker container images.
+
+#### References:
+#### https://aws.amazon.com/ecr/
+#### https://aws.amazon.com/ecs/
+
+---
 ## Security
 
 - AWS WAF is a web application firewall that lets you monitor the HTTP and HTTPS requests that are forwarded to an Amazon API Gateway API, Amazon CloudFront or an Application Load Balancer. HTTP and HTTPS requests are part of the Application layer, which is layer 7. AWS WAF charges based on the number of web access control lists (web ACLs) that you create, the number of rules that you add per web ACL, and the number of web requests that you receive (it is not a free service).
@@ -157,7 +173,14 @@ A gateway endpoint is a gateway that you specify as a target for a route in your
 
 There are three best practice areas for Reliability in the cloud - Foundations, Change Management, Failure Management. Being aware of how change affects a system (change manage- ment) allows you to plan proactively, and monitoring allows you to quickly identify trends that could lead to capacity issues or SLA breaches.
 
-- AWS Config - AWS Config is a service that enables you to assess, audit, and evaluate the configurations of your AWS resources. Config continuously monitors and records your AWS resource configurations and allows you to automate the evaluation of recorded configurations against desired configurations.
+- AWS Config - AWS Config is a service that enables you to assess, audit, and evaluate the configurations of your AWS resources. Config continuously monitors and records your AWS resource configurations and allows you to automate the evaluation of recorded configurations against desired configurations. Think resource-specific history, audit, and compliance; think Config.
+  - With AWS Config, you can do the following:
+    - Evaluate your AWS resource configurations for desired settings.
+    - Get a snapshot of the current configurations of the supported resources that are associated with your AWS account.
+    - Retrieve configurations of one or more resources that exist in your account.
+    - Retrieve historical configurations of one or more resources.
+    - Receive a notification whenever a resource is created, modified, or deleted.
+    - View relationships between resources. For example, you might want to find all resources that use a particular security group.
 
 - AWS CloudTrail - AWS CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account. With CloudTrail, you can log, continuously monitor, and retain account activity related to actions across your AWS infrastructure. CloudTrail provides event history of your AWS account activity, including actions taken through the AWS Management Console, AWS SDKs, command-line tools, and other AWS services.
 
@@ -181,6 +204,9 @@ The AWS Well-Architected Framework helps you understand the pros and cons of dec
 - The AWS Well-Architected Framework is based on five pillars — Operational Excellence, Security, Reliability, Performance Efficiency, and Cost Optimization.
   - "Security" - The ability to protect information, systems, and assets while delivering business value through risk assessments and mitigation strategies.
   - "Performance Efficiency" - The ability to use computing resources efficiently to meet system requirements, and to maintain that efficiency as demand changes and technologies evolve.
+  - "Reliability" - Foundations are part of the Reliability pillar of the AWS Well-Architected Framework. AWS states that before architecting any system, foundational requirements that influence reliability should be in place. The services that are part of foundations are: AWS IAM, Amazon VPC, AWS Trusted Advisor, AWS Service Quotas (earlier known as AWS Service Limits).
+
+
 
 ---
 ## Migration from on-premises to AWS Cloud
@@ -238,6 +264,7 @@ AWS provides a set of fully managed services that you can use to build and run s
 
 ### References
 #### https://aws.amazon.com/serverless/
+#### https://aws.amazon.com/athena/
 
 ---
 ## Data Analitycs

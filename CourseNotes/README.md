@@ -121,6 +121,19 @@
     - IAM Roles assigned to EC2 & IAM user access management
     - Data security on your instance
 
+### Shared Responsability Model for EC2 Storage
+
+- AWS
+    - Infrastructure
+    - Replication for data for EBS volumes & EFS drives
+    - Replacing faulty hardware
+    - Ensuring their employees cannot access your data
+- Customer
+    - Setting up backup / snapshot procedures
+    - Setting up data encryption
+    - Responsibility of any data on the drives
+    - Understanding the risk of using EC2 Instance Store
+
 ---
 
 # IAM - Identity and Access Management
@@ -282,7 +295,167 @@
 
     - EC2 Instance: AMI (OS) + Instance Size (CPU + RAM) + Storage + security groups + EC2 User Data
     - Security Groups: Firewall attached to the EC2 instance
-    - **EC2 User Data: Script launched at the first start of an instance**
+    - EC2 User Data: Script launched at the first start of an instance
     - SSH: start a terminal into our EC2 Instances (port 22)
-    - **EC2 Instance Role: link to IAM roles**
-    - Purchasing Options: **On-Demand, Spot, Reserved (Standard + Convertible + Scheduled), Dedicated Host, Dedicated Instance**
+    - EC2 Instance Role: link to IAM roles
+    - Purchasing Options: On-Demand, Spot, Reserved (Standard + Convertible + Scheduled), Dedicated Host, Dedicated Instance
+
+## EC2 Instance Storage Section
+
+- EBS Volume
+    - An EBS (**Elastic Block Store**) Volume is a network drive you can attach to your instances while they run
+        - It uses the network to communicate the instance, which means there might be a bit of latency
+        - It can be detached from an EC2 instance and attached to another one quickly
+    - It **allows your instances to persist data**, even after their termination
+    - They can only be **mounted to one instance at a time** (at the CCP level)
+    - They are bound to a specific availability zone
+        - **It’s locked to an Availability Zone (AZ)**
+            - An EBS Volume in us-east-1a cannot be attached to us-east-1b
+            - **To move a volume across, you first need to snapshot it**
+    - Analogy: Think of them as a “network USB stick”
+    - Free tier: 30 GB of free EBS storage of type gp2 per month
+        - Have a provisioned capacity (size in GBs, and IOPS)
+            - You get **billed for all the provisioned capacity**
+            - You **can increase the capacity** of the drive over time
+
+- EBS Snapshots
+    - Make a backup (snapshot) of your EBS volume at a point in time
+    - **Not necessary to detach** volume to do snapshot, but recommended
+    - Can copy snapshots **across AZ or Region**
+
+- AMI Overview
+    - **AMI = Amazon Machine Image**
+    - AMI are a **customization of an EC2 instance**
+        - You add your own software, configuration, operating system, monitoring…
+        - Faster boot / configuration time because all your **software is pre-packaged**
+    - AMI are built for a **specific region** (and **can be copied across regions**)
+    - You can launch EC2 instances from:
+        - A **Public AMI**: AWS provided
+        - **Your own AMI**: you make and maintain them yourself
+        - An **AWS Marketplace AMI**: an AMI someone else made (and potentially sells)
+
+- AMI Process (from an EC2 instance)
+    - Start an EC2 instance and customize it
+    - Stop the instance (for data integrity)
+    - Build an AMI – this will also create EBS snapshots
+    - Launch instances from other AMIs
+
+- EC2 Instance Store
+    - **High-performance** hardware disk, use EC2 Instance Store
+    - Better **I/O** performance
+    - EC2 Instance Store lose their storage if they’re stopped (**ephemeral**)
+    - Good for **buffer / cache / scratch data / temporary content**
+    - Risk of data loss if hardware fails
+    - **Backups and Replication are your responsibility**
+
+- EFS – Elastic File System
+    - Managed NFS (network file system) that **can be mounted on 100s of EC2**
+    - **EFS works with Linux EC2 instances in multi-AZ**
+    - **Highly available, scalable, expensive (3x gp2), pay per use, no capacity planning**
+
+- EC2 Instance Storage - Summary
+    - EBS volumes:
+        - network drives attached to one EC2 instance at a time
+        - Mapped to an Availability Zones
+        - Can use EBS Snapshots for backups / transferring EBS volumes across AZ
+    - AMI: create ready-to-use EC2 instances with our customizations
+    - EC2 Instance Store:
+        - High performance hardware disk attached to our EC2 instance
+        - Lost if our instance is stopped / terminated
+    - EFS: network file system, can be attached to 100s of instances in a region
+
+---
+
+# Elastic Load Balancing & Auto Scaling Groups Section
+
+## Scalability & High Availability
+- Scalability means that an application / system can handle greater loads by adapting.
+- There are **two kinds of scalability**:
+    - **Vertical Scalability**
+    - **Horizontal Scalability** (= elasticity)
+- **Scalability is linked but different to High Availability**
+
+### Vertical Scalability
+- Vertical Scalability means **increasing the size of the instance**
+    - For example, your application runs on a t2.micro
+    - Scaling that application vertically means running it on a t2.large
+- Vertical scalability is **very common for non distributed systems, such as a database**.
+- There’s usually a limit to how much you can vertically scale (hardware limit)
+
+### Horizontal Scalability
+- Horizontal Scalability means **increasing the number of instances** / systems for your application
+- Horizontal scaling implies distributed systems
+- This is **very common for web applications / modern applications**
+- It’s easy to horizontally scale thanks the cloud offerings such as Amazon EC2
+
+### High Availability
+- High Availability usually goes hand in hand with **horizontal scaling**
+- High availability means running your application / system in at **least 2 Availability Zones**
+- The goal of **high availability is to survive a data center loss (disaster)**
+
+### High Availability & Scalability For EC2
+- **Vertical Scaling: Increase instance size (= scale up / down)**
+    - From: t2.nano - 0.5G of RAM, 1 vCPU
+    - To: u-12tb1.metal – 12.3 TB of RAM, 448 vCPUs
+- **Horizontal Scaling: Increase number of instances (= scale out / in)**
+    - Auto Scaling Group
+    - Load Balancer
+- **High Availability: Run instances for the same application across multi AZ**
+    - Auto Scaling Group multi AZ
+    - Load Balancer multi AZ
+
+### Scalability vs Elasticity (vs Agility)
+- Scalability
+    - Ability to accommodate a larger load by making the hardware stronger (**scale up), or by adding nodes (scale out)**
+- Elasticity
+    - Once a system is scalable, elasticity means that there will be some “auto-scaling” so that the system can **scale based on the load**. This is “cloud-friendly”: **pay-per-use, match demand, optimize costs**
+- Agility
+    - (not related to scalability - distractor) new IT resources are **only a click away**, which means that you **reduce the time** to make those resources available **to your developers from weeks to just minutes**
+
+### What is load balancing?
+- Load balancers are servers that forward **internet traffic to multiple servers** (EC2 Instances) downstream
+
+### Why use a load balancer? 
+- **Spread load across multiple downstream instances** 
+- Expose a **single point of access (DNS)** to your application 
+- Seamlessly handle failures of downstream instances 
+- **Do regular health checks to your instances** 
+- Provide **SSL termination (HTTPS) for your websites** 
+- **High availability across zones**
+
+### Why use an Elastic Load Balancer?
+- An ELB (Elastic Load Balancer) is a **managed load balancer**
+    - **AWS guarantees that it will be working**
+    - **AWS takes care of upgrades, maintenance, high availability**
+    - **AWS provides only a few configuration knobs**
+- It costs less to setup your own load balancer but it will be a lot more effort on your end (maintenance, integrations)
+- 3 kinds of load balancers offered by AWS:
+    - **Application Load Balancer (HTTP / HTTPS only) – Layer 7**
+    - **Network Load Balancer (ultra-high performance, allows for TCP) – Layer 4**
+    - **Classic Load Balancer (slowly retiring) – Layer 4 & 7**
+
+### What’s an Auto Scaling Group?
+- In real-life, the load on your websites and application can change
+- In the cloud, you can create and get rid of servers very quickly
+- The goal of an Auto Scaling Group (ASG) is to:
+    - **Scale out (add EC2 instances) to match an increased load**
+    - **Scale in (remove EC2 instances) to match a decreased load**
+    - **Ensure we have a minimum and a maximum number of machines running**
+    - **Automatically register new instances to a load balancer**
+    - **Replace unhealthy instances**
+- **Cost Savings**: only run at an optimal capacity (principle of the cloud)
+
+## ELB & ASG – Summary
+||
+|---|
+|High Availability vs Scalability (vertical and horizontal) vs Elasticity vs Agility in the Cloud|
+|Elastic Load Balancers (ELB)|
+|Distribute traffic across backend EC2 instances, can be Multi-AZ|
+|Supports health checks|
+|3 types: Application LB (HTTP – L7), Network LB (TCP – L4), Classic LB (old)|
+|Auto Scaling Groups (ASG)|
+|Implement Elasticity for your application, across multiple AZ|
+|Scale EC2 instances based on the demand on your system, replace unhealthy|
+|Integrated with the ELB|
+
+---

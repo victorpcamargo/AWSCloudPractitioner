@@ -60,6 +60,18 @@ A gateway endpoint is a gateway that you specify as a target for a route in your
 #### References:
 #### https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html
 
+--
+- VPC Peering
+  - VPC Peering is incorrect because this is just a networking connection between two VPCs, and not between your on-premises data center and VPC. You can create a VPC peering connection between your own VPCs, with a VPC in another AWS account, or with a VPC in a different AWS Region
+- NAT Gateway
+  - NAT Gateway is incorrect because this just enables EC2 instances in a private subnet to connect to the Internet or other AWS services, but prevent the Internet from initiating a connection with those instances.
+- Egress-Only Internet Gateway
+  - Egress-Only Internet Gateway is incorrect because this works like a NAT Gateway but for IPv6 traffic only. An egress-only Internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows outbound communication over IPv6 from instances in your VPC to the Internet, and prevents the Internet from initiating an IPv6 connection with your instances.
+
+#### References:
+#### https://docs.aws.amazon.com/vpc/latest/adminguide/Introduction.html
+#### https://aws.amazon.com/route53/
+
 ---
 ## Storage
 
@@ -111,6 +123,15 @@ A gateway endpoint is a gateway that you specify as a target for a route in your
 #### References:
 #### https://aws.amazon.com/ecr/
 #### https://aws.amazon.com/ecs/
+
+--
+- AWS Batch
+  - AWS Batch is a regional service that simplifies running batch jobs across multiple Availability Zones within a region. You can create AWS Batch compute environments within a new or existing VPC. After a compute environment is up and associated with a job queue, you can define job definitions that specify which Docker container images to run your jobs.
+
+#### References:
+#### https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resources.html
+#### https://d1.awsstatic.com/whitepapers/architecture/AWS-Reliability-Pillar.pdf
+#### https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events
 
 ---
 ## Security
@@ -188,7 +209,11 @@ There are three best practice areas for Reliability in the cloud - Foundations, 
 
 - AWS Trusted Advisor - AWS Trusted Advisor is an online tool that provides you real-time guidance to help you provision your resources following AWS best practices on cost optimization, security, fault tolerance, service limits, and performance improvement.
 
-- Amazon Inspector - Amazon Inspector is an automated security assessment service that helps improve the security and compliance of applications deployed on AWS. Amazon Inspector automatically assesses applications for exposure, vulnerabilities, and deviations from best practices.
+- Amazon Inspector - Amazon Inspector is an automated security assessment service that helps improve the security and compliance of applications deployed on AWS. Amazon Inspector automatically assesses applications for ...
+  - exposure
+  - vulnerabilities
+  - deviations
+  ... from best practices.
 
 - Amazon GuardDuty - Amazon GuardDuty is a threat detection service that monitors malicious activity and unauthorized behavior to protect your AWS account. GuardDuty analyzes billions of events across your AWS accounts from AWS CloudTrail (AWS user and API activity in your accounts), Amazon VPC Flow Logs (network traffic data), and DNS Logs (name query patterns). This service is for AWS account level access, not for instance-level management like an EC2. GuardDuty cannot be used to check OS vulnerabilities.
 
@@ -291,10 +316,16 @@ AWS provides a set of fully managed services that you can use to build and run s
 ### Cost Optimization
 
 - AWS Budgets
-  - AWS Budgets gives you the ability to set custom budgets that alert you when your costs or usage exceed (or are forecasted to exceed) your budgeted amount.
-  - You can also use AWS Budgets to set reservation utilization or coverage targets and receive alerts when your utilization drops below the threshold you define. Reservation alerts are supported for Amazon EC2, Amazon RDS, Amazon Redshift, Amazon ElastiCache, and Amazon Elasticsearch reservations.
+  - AWS Budgets gives you the ability to **set custom budgets that alert you when your costs or usage exceed (or are forecasted to exceed) your budgeted amount**.
+  - You can also use AWS Budgets to **set reservation utilization or coverage targets and receive alerts when your utilization drops below the threshold you define**. Reservation alerts are supported for Amazon EC2, Amazon RDS, Amazon Redshift, Amazon ElastiCache, and Amazon Elasticsearch reservations.
 - AWS Simple Monthly Calculator
-  - The Simple Monthly Calculator provides an estimate of usage charges for AWS services based on certain information you provide. It helps customers and prospects estimate their monthly AWS bill more efficiently. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold.
+  - The Simple Monthly Calculator **provides an estimate of usage charges for AWS services based on certain information you provide**. It helps customers and prospects estimate their monthly AWS bill more efficiently. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold. This is just a tool that enables you to **view and analyze your costs and usage**.
+- AWS Cost and Usage Report
+  - The Cost and Usage Report is your one-stop-shop for accessing the most granular data about your AWS costs and usage. You can also load your cost and usage information into Amazon Athena, Amazon Redshift, AWS QuickSight, or a tool of your choice.
+  - With the AWS Cost & Usage Report, you can do the following:
+    - Access comprehensive AWS cost and usage information
+    - Track your Amazon EC2 Reserved Instance (RI) usage
+    - Leverage strategic data integrations
 
 --
 ### Cost-Effective
@@ -330,7 +361,13 @@ For the exam, there is no need to memorize these savings numbers. All you need t
 ### Compliance
 
 - AWS Trusted Advisor
-  - AWS Trusted Advisor is an online tool that provides real-time guidance to help provision your resources following AWS best practices. Whether establishing new workflows, developing applications, or as part of ongoing improvement, recommendations provided by Trusted Advisor regularly help keep your solutions provisioned optimally. AWS Trusted Advisor analyzes your AWS environment and provides best practice recommendations in five categories: Cost Optimization, Performance, Security, Fault Tolerance, Service Limits. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold.
+  - AWS Trusted Advisor is an online tool that provides real-time guidance to help provision your resources following AWS best practices. Whether establishing new workflows, developing applications, or as part of ongoing improvement, recommendations provided by Trusted Advisor regularly help keep your solutions provisioned optimally. You cannot use this service to receive alerts when the reservation utilization falls below the defined threshold.
+  - AWS Trusted Advisor analyzes your AWS environment and provides best practice recommendations in five categories:
+    - Cost Optimization
+    - Performance
+    - Security
+    - Fault Tolerance
+    - Service Limits
 
 #### References:
 #### https://aws.amazon.com/aws-cost-management/aws-budgets/
@@ -361,6 +398,7 @@ Controls that apply to both the infrastructure layer and customer layers, but in
     - Client-side data encryption & data integrity authentication
     - Server-side encryption (Filesystem and/or data)
     - Network traffic protection (Encryption, Integrity, Identity)
+    - Zone Security
 - AWS
   - Responsability for security OF the Cloud.
     - Software
@@ -375,3 +413,4 @@ Controls that apply to both the infrastructure layer and customer layers, but in
 
 #### References:
 #### https://aws.amazon.com/compliance/shared-responsibility-model/
+#### https://d1.awsstatic.com/Marketplace/scenarios/security/SEC_02_TSB_Final.pdf

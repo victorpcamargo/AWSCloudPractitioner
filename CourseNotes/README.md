@@ -1430,7 +1430,7 @@ facility)
 - One single Gateway to provide this functionality
 - **Works with Direct Connect Gateway, VPN connections**
 
-## VPC Closing Comments
+## VPC - Summary
 ||
 |---|
 |VPC: Virtual Private Cloud|
@@ -1447,3 +1447,260 @@ facility)
 |Transit Gateway: Connect thousands of VPC and on-premises networks together|
 
 ---
+
+# Security & Compliance Section
+
+# AWS Shared Responsibility Model
+- **AWS responsibility - Security OF the Cloud**
+    - **Protecting infrastructure (hardware, software, facilities, and networking**) that runs all the AWS services
+    - **Managed services like S3, DynamoDB, RDS, etc**.
+- **Customer responsibility - Security IN the Cloud**
+    - For EC2 instance, customer is responsible for **management of the guest OS (including security patches and updates), firewall & network configuration, IAM**
+    - **Encrypting application data**
+- **Shared controls**:
+    - **Patch Management, Configuration Management, Awareness & Training**
+
+## RDS
+- **AWS responsibility**:
+    - **Manage the underlying EC2 instance, disable SSH access**
+    - **Automated DB patching**
+    - **Automated OS patching**
+    - **Audit the underlying instance and disks & guarantee it functions**
+- **Your responsibility**:
+    - **Check the ports / IP / security group inbound rules in DB’s SG**
+    - **In-database user creation and permissions**
+    - **Creating a database with or without public access**
+    - **Ensure parameter groups or DB is configured to only allow SSL connections**
+    - **Database encryption setting**
+
+## S3 
+- **AWS responsibility**: 
+    - **Guarantee you get unlimited storage**
+    - **Guarantee you get encryption**
+    - **Ensure separation of the data between different customers**
+    - **Ensure AWS employees can’t access yZour data**
+- **Your responsibility**:
+    - **Bucket configuration**
+    - **Bucket policy / public setting**
+    - **IAM user and roles**
+    - **Enabling encryption**
+
+--
+
+## DDOS Protection on AWS
+- **AWS Shield Standard**: protects against DDOS attack for your website and applications, for all customers at no additional costs
+- **AWS Shield Advanced**: 24/7 premium DDoS protection
+- **AWS WAF**: Filter specific requests based on rules
+- **CloudFront and Route 53**:
+    - Availability protection using global edge network
+    - Combined with AWS Shield, provides attack mitigation at the edge
+- Be ready to scale – leverage **AWS Auto Scaling**
+
+## AWS Shield
+- **AWS Shield Standard**:
+    - **Free service** that is activated for every AWS customer
+    - Provides **protection from attacks such as SYN/UDP Floods, Reflection attacks and other layer 3/layer 4 attacks**
+- **AWS Shield Advanced**:
+    - **Optional DDoS mitigation service ($3,000 per month per organization)**
+    - **Protect against more sophisticated attack on Amazon EC2, Elastic Load Balancing (ELB), Amazon CloudFront, AWS Global Accelerator, and Route 53**
+    - **24/7 access to AWS DDoS response team (DRP)**
+    - **Protect against higher fees during usage spikes due to DDoS**
+
+## AWS WAF – Web Application Firewall
+- **Protects your web applications from common web exploits (Layer 7)**
+- *Layer 7 is HTTP (vs Layer 4 is TCP)*
+- **Deploy on Application Load Balancer, API Gateway, CloudFront**
+- **Define Web ACL** (Web Access Control List):
+    - **Rules can include IP addresses, HTTP headers, HTTP body, or URI strings**
+    - **Protects from common attack - SQL injection and Cross-Site Scripting (XSS)**
+    - **Size constraints, geo-match (block countries)**
+    - **Rate-based rules (to count occurrences of events) – for DDoS protection**
+
+## Penetration Testing on AWS Cloud
+- AWS customers are welcome to carry out security assessments or penetration tests against their AWS infrastructure without prior approval for 8 services:
+    - Amazon EC2 instances, NAT Gateways, and Elastic Load Balancers
+    - Amazon RDS
+    - Amazon CloudFront
+    - Amazon Aurora
+    - Amazon API Gateways
+    - AWS Lambda and Lambda Edge functions
+    - Amazon Lightsail resources
+    - Amazon Elastic Beanstalk environments
+- List can increase over time (you won’t be tested on that at the exam)
+
+## Penetration Testing on your AWS Cloud
+- Prohibited Activities
+    - DNS zone walking via Amazon Route 53 Hosted Zones
+    - Denial of Service (DoS), Distributed Denial of Service (DDoS), Simulated DoS, Simulated DDoS
+    - Port flooding
+    - Protocol flooding
+    - Request flooding (login request flooding, API request flooding)
+- For any other simulated events, contact aws-security-simulatedevent@amazon.com
+- Read more: https://aws.amazon.com/security/penetration-testing/
+
+## AWS KMS (Key Management Service)
+- **Anytime you hear “encryption” for an AWS service, it’s most likely KMS**
+- **KMS = AWS manages the encryption keys** for us
+- **Encryption Opt-in**:
+    - **EBS volumes: encrypt volumes**
+    - **S3 buckets: Server-side encryption of objects**
+    - **Redshift database: encryption of data**
+    - **RDS database: encryption of data**
+    - **EFS drives: encryption of data**
+- **Encryption Automatically enabled**:
+    - **CloudTrail Logs**
+    - **S3 Glacier**
+    - **Storage Gateway**
+
+## CloudHSM
+- **CloudHSM => AWS provisions encryption hardware**
+- **Dedicated Hardware (HSM = Hardware Security Module)**
+- **You manage your own encryption keys entirely (not AWS)**
+- HSM device is tamper resistant, FIPS 140 -2 Level 3 compliance
+
+## Types of KMS Keys
+- **Customer Manager CMK**:
+    - **Create, manage and use, can enable or disable**
+    - **Possibility of rotation policy (new key generated every year, old key preserved)**
+    - **Possibility to bring-your-own-key**
+- **AWS managed CMK**:
+    - **Used by AWS service (aws/s3, aws/ebs, aws/redshift)**
+    - **Managed by AWS**
+- **CloudHSM Keys (custom keystore)**:
+    - **Keys generated from your own CloudHSM hardware device**
+    - **Cryptographic operations are performed within the CloudHSM cluster**
+
+## AWS Secrets Manager
+- Newer service, meant for **storing secrets**
+- Capability to **force rotation of secrets every X days**
+- **Automate generation of secrets on rotation (uses Lambda)**
+- **Integration with Amazon RDS** (MySQL, PostgreSQL, Aurora)
+- **Secrets are encrypted using KMS**
+- **Mostly meant for RDS integration**
+
+## AWS Artifact (not really a service)
+- **Portal that provides customers with on-demand access to AWS compliance documentation and AWS agreements**
+- Artifact Reports - Allows you to **download AWS security and compliance documents, like AWS ISO certifications, Payment Card Industry (PCI), and System and Organization Control (SOC) reports**
+- Artifact Agreements - Allows you to **review, accept, and track the status of AWS agreements such as the Business Associate Addendum (BAA)**
+- **Can be used to support internal audit or compliance**
+
+## Amazon GuardDuty
+- **Intelligent Threat discovery to Protect AWS Account**
+- **Uses Machine Learning algorithms, anomaly detection, 3rd party data**
+- One click to enable (30 days trial), no need to install software
+- Input data includes:
+    - **CloudTrail Logs**: unusual API calls, unauthorized deployments
+    - **VPC Flow Logs**: unusual internal traffic, unusual IP address
+    - **DNS Logs**: compromised EC2 instances sending encoded data within DNS queries
+- **Can setup CloudWatch Event rules to be notified in case of findings**
+- **CloudWatch Events rules can target AWS Lambda or SNS**
+
+## Amazon Inspector
+- **Automated Security Assessments for EC2 instances**
+- **Analyze** the running **OS** against known **vulnerabilities**
+- **Analyze** against unintended **network accessibility**
+- **AWS Inspector Agent must be installed on OS in EC2 instances**
+- After the assessment, you get a **report with a list of vulnerabilities**
+
+## AWS Config
+- Helps with **auditing and recording compliance of your AWS resources**
+- Helps **record configurations and changes over time**
+- Possibility of **storing the configuration data into S3 (analyzed by Athena)**
+- Questions that can be solved by AWS Config:
+    - Is there unrestricted SSH access to my security groups?
+    - Do my buckets have any public access?
+    - How has my ALB configuration changed over time?
+- You can **receive alerts (SNS notifications) for any changes**
+- AWS Config is a **per-region service**
+- **Can be aggregated across regions and accounts**
+
+## Amazon Macie
+- **Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS stored on buckets S3**.
+- Macie helps **identify and alert you to sensitive data, such as personally identifiable information (PII)**
+
+## Section Summary: Security & Compliance
+||
+|---|
+|Shield: Automatic DDoS Protection + 24/7 support for advanced|
+|WAF: Firewall to filter incoming requests based on rules|
+|KMS: Encryption keys managed by AWS|
+|CloudHSM: Hardware encryption, we manage encryption keys|
+|Artifact: Get access to compliance reports such as PCI, ISO, etc...|
+|GuardDuty: Find malicious behavior with VPC, DNS & CloudTrail Logs|
+|Inspector: For EC2 only, install agent and find vulnerabilities|
+|Config: Track config changes and compliance against rules|
+|Macie: Find sensitive data (ex: PII data) in Amazon S3 buckets|
+|CloudTrail: Track API calls made by users within account|
+
+---
+
+# Machine Learning Section
+
+## Amazon Rekognition
+- **Find objects, people, text, scenes in images and videos using ML (Machine Learning)**
+- Facial analysis and facial search to do user verification, people counting
+- Create a database of “familiar faces” or compare against celebrities
+- Use cases:
+    - Labeling
+    - Content Moderation
+    - Text Detection
+    - Face Detection and Analysis (gender, age range, emotions...)
+    - Face Search and Verification
+    - Celebrity Recognition
+    - Pathing (ex: for sports game analysis)
+
+## Amazon Transcribe
+- **Automatically convert speech to text**
+- Uses a deep learning process called automatic speech recognition (ASR) to convert speech to text quickly and accurately
+- Use cases:
+    - transcribe customer service calls
+    - automate closed captioning and subtitling
+    - generate metadata for media assets to create a fully searchable archive
+
+## Amazon Polly
+- **Turn text into lifelike speech using deep learning**
+- Allowing you to create applications that talk
+
+## Amazon Translate
+- **Natural and accurate language translation**
+- Amazon Translate allows you to localize content - such as websites and applications - for international users, and to easily translate large volumes of text efficiently.
+
+## Amazon Lex & Connect
+- **Amazon Lex: (same technology that powers Alexa)**
+    - **Automatic Speech Recognition (ASR) to convert speech to text**
+    - **Natural Language Understanding to recognize the intent of text, callers**
+    - Helps build **chatbots, call center bots**
+- **Amazon Connect**:
+    - **Receive calls, create contact flows, cloud-based virtual contact center**
+    - **Can integrate with other CRM systems or AWS**
+
+## Amazon Comprehend
+- **For Natural Language Processing – NLP**
+- **Fully managed and serverless service**
+- Uses machine learning to **find insights and relationships in text**
+    - Language of the text
+    - Extracts key phrases, places, people, brands, or events
+    - Understands how positive or negative the text is
+    - Analyzes text using tokenization and parts of speech
+    - Automatically organizes a collection of text files by topic
+- Sample use cases:
+    - analyze customer interactions (emails) to find what leads to a positive or negative experience
+    - Create and groups articles by topics that Comprehend will uncover
+
+## Amazon SageMaker
+- **Fully managed service for developers / data scientists to build ML models**
+- Typically difficult to do all the processes in one place + provision servers
+- **Machine learning process (simplified): predicting your exam score**
+
+## AWS Machine Learning - Summary
+||
+|---|
+|Rekognition: face detection, labeling, celebrity recognition|
+|Transcribe: audio to text (ex: subtitles)|
+|Polly: text to audio|
+|Translate: translations|
+|Lex: build conversational bots – chatbots|
+|Connect: cloud contact center|
+|Comprehend: natural language processing|
+|SageMaker: machine learning for every developer and data scientist|
+

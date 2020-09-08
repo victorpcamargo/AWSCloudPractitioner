@@ -2011,3 +2011,177 @@ facility)
 |CloudTrail to record API calls made within your account|
 |If your Account is compromised: change the root password, delete and rotate all passwords / keys, contact the AWS support|
 
+---
+
+# Advanced Identity Section
+
+## Amazon Cognito (simplified)
+- Identity for your Web and Mobile applications users (potentially millions)
+- Instead of creating them an IAM user, you create a user in Cognito
+- Login with Facebook, Google, Twitter...
+
+## AWS Directory Services
+- **AWS Managed Microsoft AD**
+    - Create your own AD in AWS, manage users locally, supports MFA
+    - Establish “trust” **connections with your on-premise AD**
+- **AD Connector**
+    - Directory Gateway (proxy) to redirect to on- premise AD
+    - **Users are managed on the on-premise AD**
+- **Simple AD**
+    - **AD-compatible managed directory on AWS**
+    - Cannot be joined with on-premise AD
+
+## AWS Single Sign-On (SSO)
+- Centrally manage Single SignOn to access multiple accounts and 3rd-party business applications.
+- **Integrated with AWS Organizations**
+- Supports **SAML 2.0** markup
+- **Integration with on-premise Active Directory**
+
+## Advanced Identity - Summary
+||
+|---|
+|IAM|
+|Identity and Access Management inside your AWS account|
+|For users that you trust and belong to your company|
+|Organizations: manage multiple AWS accounts|
+|Cognito: create a database of users for your mobile & web applications|
+|Directory Services: integrate Microsoft Active Directory in AWS|
+|Single Sign-On (SSO): one login for multiple AWS accounts & applications|
+
+# AWS Architecting & Ecosystem Section
+
+## Well Architected Framework General Guiding Principles
+- **Stop guessing your capacity needs**
+- **Test systems at production scale**
+- **Automate to make architectural experimentation easier**
+- **Allow for evolutionary architectures**
+    - **Design based on changing requirements**
+- **Drive architectures using data**
+- **Improve through game days**
+    - **Simulate applications for flash sale days**
+
+## AWS Cloud Best Practices – Design Principles
+- **Scalability**: vertical & horizontal
+- **Disposable Resources**: servers should be disposable & easily configured
+- **Automation**: Serverless, Infrastructure as a Service, Auto Scaling…
+- **Loose Coupling**:
+    - Monolith are applications that do more and more over time, become bigger
+    - Break it down into smaller, loosely coupled components
+    - A change or a failure in one component should not cascade to other components
+- **Services, not Servers**:
+    - Don’t use just EC2
+    - Use managed services, databases, serverless, etc !
+
+## Well Architected Framework
+- **5 Pillars**
+    - 1) **Operational Excellence**
+    - 2) **Security**
+    - 3) **Reliability**
+    - 4) **Performance Efficiency**
+    - 5) **Cost Optimization**
+- *They are not something to balance, or trade-offs, they’re a synergy*
+
+## 1) Operational Excellence
+- Includes the **ability to run and monitor systems** to deliver business value and to continually improve supporting processes and procedures
+- Design Principles
+    - **Perform operations as code** - Infrastructure as code
+    - **Annotate documentation** - Automate the creation of annotated documentation after every build
+    - **Make frequent, small, reversible changes** - So that in case of any failure, you can reverse it
+    - **Refine operations procedures frequently** - And ensure that team members are familiar with it
+    - **Anticipate failure**
+    - **Learn from all operational failures**
+
+## 2) Security
+- Includes the **ability to protect information, systems, and assets** while delivering business value through risk assessments and mitigation strategies
+- Design Principles
+    - **Implement a strong identity foundation** - Centralize privilege management and reduce (or even eliminate) reliance on long-term credentials - Principle of least privilege - IAM
+    - **Enable traceability** - Integrate logs and metrics with systems to automatically respond and take action
+    - **Apply security at all layers** - Like edge network, VPC, subnet, load balancer, every instance, operating system, and application
+    - **Automate security best practices**
+    - **Protect data in transit and at rest** - Encryption, tokenization, and access control
+    - **Keep people away from data** - Reduce or eliminate the need for direct access or manual processing of data
+    - **Prepare for security events** - Run incident response simulations and use tools with automation to increase your speed for detection, investigation, and recovery
+
+## 3) Reliability
+- **Ability of a system to recover from infrastructure or service disruptions, dynamically acquire computing resources to meet demand, and mitigate disruptions such as misconfigurations or transient network issues**
+- Design Principles
+    - **Test recovery procedures** - Use automation to simulate different failures or to recreate scenarios that led to failures before
+    - **Automatically recover from failure** - Anticipate and remediate failures before they occur
+    - **Scale horizontally** to increase aggregate system availability - Distribute requests across multiple, smaller resources to ensure that they don't share a common point of failure 
+    - **Stop guessing capacity** - Maintain the optimal level to satisfy demand without over or under provisioning - Use Auto Scaling
+    - **Manage change in automation** - Use automation to make changes to infrastructure
+
+## 4) Performance Efficiency
+- Includes the **ability to use computing resources efficiently** to meet system requirements, and to maintain that efficiency as demand changes and technologies evolve
+- Design Principles
+    - **Democratize advanced technologies** - Advance technologies become services and hence you can focus more on product development
+    - **Go global in minutes** - Easy deployment in multiple regions
+    - **Use serverless architectures** - Avoid burden of managing servers
+    - **Experiment more often** - Easy to carry out comparative testing
+    - **Mechanical sympathy** - Be aware of all AWS services
+
+## 5) Cost Optimization
+- Includes the **ability to run systems** to deliver business value **at the lowest price point**
+- Design Principles
+    - **Adopt a consumption mode** - **Pay only for what you use**
+    - **Measure overall efficiency** - Use CloudWatch
+    - **Stop spending money on data center operations** - AWS does the infrastructure part and enables customer to focus on organization projects
+    - **Analyze and attribute expenditure** - Accurate identification of system usage and costs, helps measure return on investment (ROI) - Make sure to use tags
+    - **Use managed and application level services to reduce cost of ownership** - As managed services operate at cloud scale, they can offer a lower cost per transaction or service
+
+## AWS Ecosystem – Free resources
+- AWS Blogs: https://aws.amazon.com/blogs/aws/
+- AWS Forums (community): https://forums.aws.amazon.com/index.jspa
+- AWS Whitepapers & Guides: https://aws.amazon.com/whitepapers
+- AWS Quick Starts: https://aws.amazon.com/quickstart/
+    - Automated, gold-standard deployments in the AWS Cloud
+    - Example: WordPress on AWS https://fwd.aws/P3yyv?did=qs_card&trk=qs_card
+    - Leverages CloudFormation
+- AWS Solutions: https://aws.amazon.com/solutions/
+    - Vetted Technology Solutions for the AWS Cloud
+    - Ex - AWS Landing Zone: secure, multi-account AWS environment
+    - https://aws.amazon.com/solutions/implementations/aws-landing-zone/
+
+## AWS Ecosystem - AWS Support
+- Developer
+    - Business hours email access to Cloud Support Associates
+    - General guidance: < 24 business hours
+    - System impaired: < 12 business hours
+- Business
+    - 24x7 phone, email, and chat access to Cloud Support Engineers
+    - Production system impaired: < 4 hours
+    - Production system down: < 1 hour
+- Enterprise
+    - Access to a Technical Account Manager (TAM)
+    - Concierge Support Team (for billing and account best practices)
+    - Business-critical system down: < 15 minutes
+
+## AWS Marketplace
+- **Digital catalog with thousands of software listings from independent software vendors (3rd party)**
+- Example:
+    - Custom AMI (custom OS, firewalls, technical solutions…)
+    - CloudFormation templates
+    - Software as a Service
+    - Containers
+- If you buy through the AWS Marketplace, it goes into your AWS bill
+- **You can sell your own solutions on the AWS Marketplace**
+
+## AWS Training
+- AWS Digital (online) and Classroom Training (in-person or virtual)
+- AWS Private Training (for your organization)
+- Training and Certification for the U.S Government
+- Training and Certification for the Enterprise
+- AWS Academy: helps universities teach AWS
+- And your favorite online teacher…
+- teaching you all about AWS Certifications and more!
+
+## AWS Professional Services & Partner Network
+- The AWS Professional Services organization is a global team of experts
+- They work alongside your team and a chosen member of the APN
+- APN = AWS Partner Network
+- APN Technology Partners: providing hardware, connectivity, and software
+- APN Consulting Partners: professional services firm to help build on AWS
+- APN Training Partners: find who can help you learn AWS
+- AWS Competency Program: AWS Competencies are granted to APN Partners who have demonstrated technical proficiency and proven customer success in specialized solution areas.
+- AWS Navigate Program: help Partners become better Partners
+
